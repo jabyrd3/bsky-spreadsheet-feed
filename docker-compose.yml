@@ -1,0 +1,19 @@
+version: '3'
+services:
+  bksy-feed:
+    image: bsky:latest
+    build:
+      context: '.'
+    volumes: 
+      - ./db.sqlite:/app/db.sqlite
+    environment:
+      - FEEDGEN_PORT=3000
+      - FEEDGEN_LISTENHOST=localhost
+      - FEEDGEN_SQLITE_LOCATION="db.sqlite"
+      - FEEDGEN_SUBSCRIPTION_ENDPOINT=wss://bsky.social
+      # bsky.dev.host
+      - FEEDGEN_HOSTNAME=localhost 
+      - GOOG_API_KEY=${GOOG_API_KEY}
+      - TARGET_SPREADSHEET_ID=${TARGET_SPREADSHEET_ID}
+    ports:
+      - 3000:3000
