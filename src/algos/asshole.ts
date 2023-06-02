@@ -2,11 +2,11 @@ import { InvalidRequestError } from '@atproto/xrpc-server'
 import { QueryParams } from '../lexicon/types/app/bsky/feed/getFeedSkeleton'
 import { AppContext } from '../config'
 
-export const uri = 'at://did:example:alice/app.bsky.feed.generator/whats-alf'
-
+// export const uri = 'at://did:plc:yv6gvhnalg56qtfxh26d5dou/app.bsky.feed.generator/kabuki-friends'
+export const uri = 'at://did:web:bsky.dev.host/app.bsky.feed.generator/as-hole' //{YOUR_REMOTE_SERVER_PUBLIC_DOMAIN
 export const handler = async (ctx: AppContext, params: QueryParams) => {
   let builder = ctx.db
-    .selectFrom('post')
+    .selectFrom('ashole')
     .selectAll()
     .orderBy('indexedAt', 'desc')
     .orderBy('cid', 'desc')
@@ -19,9 +19,9 @@ export const handler = async (ctx: AppContext, params: QueryParams) => {
     }
     const timeStr = new Date(parseInt(indexedAt, 10)).toISOString()
     builder = builder
-      .where('post.indexedAt', '<', timeStr)
-      .orWhere((qb) => qb.where('post.indexedAt', '=', timeStr))
-      .where('post.cid', '<', cid)
+      .where('ashole.indexedAt', '<', timeStr)
+      .orWhere((qb) => qb.where('ashole.indexedAt', '=', timeStr))
+      .where('ashole.cid', '<', cid)
   }
   const res = await builder.execute()
 

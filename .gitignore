@@ -30,7 +30,7 @@ coverage
 .grunt
 
 db.sqlite
-
+db.sql
 # Bower dependency directory (https://bower.io/)
 bower_components
 

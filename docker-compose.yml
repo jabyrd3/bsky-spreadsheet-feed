@@ -5,11 +5,12 @@ services:
     build:
       context: '.'
     volumes: 
-      - ./db.sqlite:/app/db.sqlite
+      - /Users/jordanbyrd/bluesky/db.sql:/app/db.sql
+
     environment:
       - FEEDGEN_PORT=3000
-      - FEEDGEN_LISTENHOST=localhost
-      - FEEDGEN_SQLITE_LOCATION="db.sqlite"
+      - FEEDGEN_LISTENHOST=0.0.0.0
+      - FEEDGEN_SQLITE_LOCATION=db.sql
       - FEEDGEN_SUBSCRIPTION_ENDPOINT=wss://bsky.social
       # bsky.dev.host
       - FEEDGEN_HOSTNAME=localhost 

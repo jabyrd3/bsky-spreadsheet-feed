@@ -1,7 +1,10 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import axios from 'axios';
+import dotenv from 'dotenv'
+
 export async function wkSkeeters() {
   // Initialize the sheet - doc ID is the long id in the sheets URL
+  dotenv.config()
   const doc = new GoogleSpreadsheet(process.env.TARGET_SPREADSHEET_ID);
   doc.useApiKey(process.env.GOOG_API_KEY);
   await doc.loadInfo(); // loads sheets

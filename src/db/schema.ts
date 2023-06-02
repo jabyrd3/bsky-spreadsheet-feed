@@ -1,6 +1,8 @@
 export type DatabaseSchema = {
   post: Post
   sub_state: SubState
+  ashole: Post
+  as_sub_state: SubState
 }
 
 export type Post = {

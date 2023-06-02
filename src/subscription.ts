@@ -43,7 +43,27 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
           indexedAt: new Date().toISOString(),
         }
       })
-
+    const assWords = ["as hole", "ass hole", "ashole", "qsshole", "azzhole"]
+    const asPostsToCreate = ops.posts.creates
+      .filter((create) => {
+        // only posts from our spreadsheet
+        const lowertext = create.record.text.toLowerCase();
+        return assWords.some(word => lowertext.includes(word))
+      })
+      .map(create => {
+        console.log(create)
+        return create
+      })
+      .map((create) => {
+        // map alf-related posts to a db row
+        return {
+          uri: create.uri,
+          cid: create.cid,
+          replyParent: create.record?.reply?.parent.uri ?? null,
+          replyRoot: create.record?.reply?.root.uri ?? null,
+          indexedAt: new Date().toISOString(),
+        }
+      })
     if (postsToDelete.length > 0) {
       await this.db
         .deleteFrom('post')
@@ -54,6 +74,13 @@ export class FirehoseSubscription extends FirehoseSubscriptionBase {
       await this.db
         .insertInto('post')
         .values(postsToCreate)
+        .onConflict((oc) => oc.doNothing())
+        .execute()
+    }
+    if (asPostsToCreate.length > 0) {
+      await this.db
+        .insertInto('ashole')
+        .values(asPostsToCreate)
         .onConflict((oc) => oc.doNothing())
         .execute()
     }
